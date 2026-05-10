@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import Header from './components/Header'
 import Footer from "./components/Footer";
+import ListaProyectos from './components/ListaProyecto'; // ojo al nombre correcto
 import { proyectoService } from './services/proyectoService'
 import "./css/styles.css";
 import './App.css'
 
 function App() {
-  // Datos de prueba
   const proyectosIniciales = [
     { id: 1, titulo: "Laboratorio de Sistemas" },
     { id: 2, titulo: "Programación Visual" },
@@ -18,10 +18,10 @@ function App() {
   const [proyectosFiltrados, setProyectosFiltrados] = useState(proyectosIniciales);
 
   const manejarBusqueda = (texto) => {
-    // Usamos tu servicio
     const resultado = proyectoService.buscarProyecto(texto, proyectosIniciales);
     setProyectosFiltrados(resultado);
   };
+
   const manejarEliminar = (id) => {
     const listaNueva = proyectoService.eliminarProyecto(id, proyectosFiltrados);
     setProyectosFiltrados(listaNueva);
@@ -31,7 +31,7 @@ function App() {
     <div className="App">
       <Header onBuscar={manejarBusqueda} />
       <main style={{ padding: '20px' }}>
-        <h2>Lista de Proyectos</h2>
+        <h2>Lista de Proyectos (filtrados)</h2>
         <ul>
           {proyectosFiltrados.map(p => (
             <li key={p.id} style={{ fontSize: '1.2rem', margin: '10px 0' }}>
@@ -45,11 +45,11 @@ function App() {
             </li>
           ))}
         </ul>
+        <ListaProyectos />
       </main>
       <Footer />
     </div>
-    
-  )
-}
+  ); 
+} 
 
-export default App
+export default App;

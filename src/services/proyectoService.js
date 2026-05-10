@@ -8,8 +8,9 @@ export const proyectoService = {
     ],
 
     //Obtener proyecto 
-
-
+    obtenerProyectos: function() {
+        return this.proyectos;
+      },
     //Agregar proyecto
 
 
