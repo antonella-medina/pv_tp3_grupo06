@@ -10,7 +10,7 @@ const Header = ({ onBuscar }) => {
             justifyContent: 'space-between',
             alignItems: 'center' 
         }}>
-            <h1>Gestor Proyectos</h1>
+            <h1>Gestor Proyectos de Proyectos Educativos</h1>
             <input 
                 type="text" 
                 placeholder="Buscar por título..." 

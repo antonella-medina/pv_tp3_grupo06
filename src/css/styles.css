@@ -1,0 +1,147 @@
+/* Variables para Consistencia Visual (:root) */
+:root {
+    --color-primario: #2c3e50;    /* Azul oscuro */
+    --color-secundario: #3498db;  /* Azul claro */
+    --color-fondo: #f4f4f4;       /* Gris muy claro */
+    --fuente-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estructura General con CSS Grid */
+.App {
+    display: grid;
+    grid-template-areas: 
+        "header"
+        "nav"
+        "main"
+        "footer";
+    grid-template-rows: auto auto 1fr auto;
+    min-height: 100vh;
+    margin: 0;
+    font-family: var(--fuente-base);
+    background-color: var(--color-fondo);
+}
+
+header { 
+    grid-area: header; 
+    background-color: var(--color-primario); 
+    color: white; 
+    padding: 1rem; 
+    text-align: center; 
+}
+
+/* Flexbox para el Navegador (nav) */
+nav { 
+    grid-area: nav; 
+    background-color: #ecf0f1; 
+}
+
+nav ul {
+    display: flex; 
+    justify-content: center;
+    list-style: none;
+    gap: 20px;
+    padding: 10px;
+}
+
+/* --- ESTA ES LA PARTE QUE AGREGAMOS/CORREGIMOS --- */
+nav a {
+    text-decoration: none;
+    color: var(--color-primario);
+    font-weight: bold;
+    transition: 0.3s;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+nav a:hover {
+    color: var(--color-secundario);
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+nav a:focus {
+    outline: 2px solid var(--color-secundario);
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+nav a:active {
+    background-color: var(--color-secundario);
+    color: white;
+}
+/* ------------------------------------------------ */
+
+main { 
+    grid-area: main; 
+    padding: 20px; 
+}
+
+footer { 
+    grid-area: footer; 
+    text-align: center; 
+    padding: 1rem; 
+    background: #ddd; 
+}
+
+/*index*/
+ .stats-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+ #novedades-titulo {
+            border-bottom: 2px solid var(--color-secundario);
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+    /*detalle*/
+    .caja-biblioteca {
+        background-color: #ffffff;
+        border: 2px solid var(--color-primario); 
+        padding: 20px;
+        border-radius: 10px;
+    }
+    /*perfil*/
+    .contenedor-perfiles {
+            display: flex;        
+            flex-wrap: wrap;       
+            justify-content: center; 
+            gap: 20px;            
+            padding: 20px;
+        }
+
+        .perfil {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            width: 220px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .avatar { font-size: 60px; margin-bottom: 10px; }
+        .rol-docente { color: #d35400; font-weight: bold; }
+        .rol-alumno { color: #2980b9; font-weight: bold; }
+        h2, p { margin: 5px 0; }
+
+        /*proyecto*/
+         .contenedor-proyectos { 
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            }
+            article {
+                border: 1px solid #ccc;
+                padding: 15px;
+                width: 250px;
+                background-color: #f9f9f9;
+                border-radius: 6px;
+            }
+            img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
