@@ -10,7 +10,7 @@ function ListaProyectos() {
   const agregarProyecto = () => {
     const nuevos = proyectoService.agregarProyecto({
       titulo: nuevoTitulo,
-      categoria: nuevaCategoria,ddddddddddddd
+      categoria: nuevaCategoria,
       estado: nuevoEstado
     });
     setProyectos([...nuevos]); 
