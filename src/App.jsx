@@ -82,6 +82,7 @@ function App() {
             </li>
           ))}
         </ul>
+        <ListaProyectos />
       </main>
       <Footer />
     </div>

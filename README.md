@@ -2,7 +2,7 @@
 ## Integrantes
 - Medina Antonella Juliana - usuario: [antonella-medina]
 - Lucas Santiago Soto - usuario: [lucastux08-ai]
--
+- Luis Miguel Moreno Sivila - usuario: [LuisMiguelMorenoSivila]
 -
 ## Descripción del Proyecto
 Este proyecto es una migración de una plataforma de gestión educativa desarrollada originalmente en HTML/CSS (TP N° 1) a una aplicación funcional en React. 
