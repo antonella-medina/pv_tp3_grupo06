@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Header from './components/Header'
 import Footer from "./components/Footer";
-import ListaProyectos from './components/ListaProyecto'; // ojo al nombre correcto
+import ListaProyectos from './components/ListaProyecto'; 
 import { proyectoService } from './services/proyectoService'
 import "./css/styles.css";
 import './App.css'
@@ -16,6 +16,9 @@ function App() {
   ];
 
   const [proyectosFiltrados, setProyectosFiltrados] = useState(proyectosIniciales);
+  const [nuevoTitulo, setNuevoTitulo] = useState("");
+  const [nuevaCategoria, setNuevaCategoria] = useState("");
+  const [nuevoEstado, setNuevoEstado] = useState("");
 
   const manejarBusqueda = (texto) => {
     const resultado = proyectoService.buscarProyecto(texto, proyectosIniciales);
@@ -27,11 +30,45 @@ function App() {
     setProyectosFiltrados(listaNueva);
   };
 
+  const manejarAgregar = () => {
+    const nuevos = proyectoService.agregarProyecto({
+      titulo: nuevoTitulo,
+      categoria: nuevaCategoria,
+      estado: nuevoEstado
+    });
+    setProyectosFiltrados([...nuevos]);
+    setNuevoTitulo("");
+    setNuevaCategoria("");
+    setNuevoEstado("");
+  };
+
   return (
     <div className="App">
       <Header onBuscar={manejarBusqueda} />
       <main style={{ padding: '20px' }}>
         <h2>Lista de Proyectos (filtrados)</h2>
+
+        {/* Formulario para agregar */}
+        <input
+          type="text"
+          placeholder="Título"
+          value={nuevoTitulo}
+          onChange={(e) => setNuevoTitulo(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Categoría"
+          value={nuevaCategoria}
+          onChange={(e) => setNuevaCategoria(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Estado"
+          value={nuevoEstado}
+          onChange={(e) => setNuevoEstado(e.target.value)}
+        />
+        <button onClick={manejarAgregar}>Agregar Proyecto</button>
+
         <ul>
           {proyectosFiltrados.map(p => (
             <li key={p.id} style={{ fontSize: '1.2rem', margin: '10px 0' }}>

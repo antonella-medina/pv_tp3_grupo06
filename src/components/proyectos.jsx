@@ -7,7 +7,7 @@ export const proyectoService = {
         { id: 5, titulo: "Lista de Nombres Ordenada", categoria: "Programación", estado: "Finalizado" }
     ],
 
-
+  
     //Agregar proyecto
     agregarProyecto: function(nuevoProyecto) {
         const nuevoId = this.proyectos.length > 0 
@@ -37,4 +37,3 @@ export const proyectoService = {
         );
     }
 };
- 
