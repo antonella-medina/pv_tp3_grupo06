@@ -6,7 +6,6 @@ import "./css/styles.css";
 import './App.css'
 
 function App() {
-  // Datos de prueba
   const proyectosIniciales = [
     { id: 1, titulo: "Laboratorio de Sistemas" },
     { id: 2, titulo: "Programación Visual" },
@@ -30,6 +29,12 @@ function App() {
   return (
     <div className="App">
       <Header onBuscar={manejarBusqueda} />
+
+      {/* El Nav le toca al Integrante B*/}
+      <nav>
+          <ul><li></li></ul>
+      </nav>
+
       <main style={{ padding: '20px' }}>
         <h2>Lista de Proyectos</h2>
         <ul>
