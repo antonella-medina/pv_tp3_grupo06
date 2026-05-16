@@ -39,11 +39,23 @@ export const proyectoService = {
          }
     ],
 
-    //Obtener proyecto 
-
 
     //Agregar proyecto
+    agregarProyecto: function(nuevoProyecto) {
+        const nuevoId = this.proyectos.length > 0 
+            ? this.proyectos[this.proyectos.length - 1].id + 1 
+            : 1;
 
+        const proyecto = {
+            id: nuevoId,
+            titulo: nuevoProyecto.titulo,
+            categoria: nuevoProyecto.categoria,
+            estado: nuevoProyecto.estado
+        };
+
+        this.proyectos.push(proyecto);
+        return this.proyectos;
+    },
 
     eliminarProyecto: function(id, lista) {
         return lista.filter(proy => proy.id !== id);
@@ -57,3 +69,4 @@ export const proyectoService = {
         );
     }
 };
+ 
