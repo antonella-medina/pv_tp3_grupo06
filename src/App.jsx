@@ -12,13 +12,16 @@ function App() {
     { id: 2, titulo: "Programación Visual" },
     { id: 3, titulo: "Informática Básica" },
     { id: 4, titulo: "Base de Datos II" },
-    { id: 5, titulo: "Estructura de Datos" }
+    { id: 5, titulo: "Estructura de Datos" } // 👈 sin punto y coma
   ];
 
   const [proyectosFiltrados, setProyectosFiltrados] = useState(proyectosIniciales);
   const [nuevoTitulo, setNuevoTitulo] = useState("");
   const [nuevaCategoria, setNuevaCategoria] = useState("");
   const [nuevoEstado, setNuevoEstado] = useState("");
+  const [nuevaDescripcion, setNuevaDescripcion] = useState("");   
+  const [nuevoRecurso, setNuevoRecurso] = useState("");           
+  const [nuevoEquipo, setNuevoEquipo] = useState("");
 
   const manejarBusqueda = (texto) => {
     const resultado = proyectoService.buscarProyecto(texto, proyectosIniciales);
@@ -34,19 +37,28 @@ function App() {
     const nuevos = proyectoService.agregarProyecto({
       titulo: nuevoTitulo,
       categoria: nuevaCategoria,
-      estado: nuevoEstado
+      estado: nuevoEstado, // 👈 coma corregida
+      descripcion: nuevaDescripcion, 
+      recursos: nuevoRecurso.split(",").map(r => r.trim()), 
+      equipo: nuevoEquipo.split(",").map(e => {
+        const [nombre, rol] = e.split("-");
+        return { nombre: nombre?.trim(), rol: rol?.trim() };
+      })
     });
+
     setProyectosFiltrados([...nuevos]);
     setNuevoTitulo("");
     setNuevaCategoria("");
     setNuevoEstado("");
+    setNuevaDescripcion("");
+    setNuevoRecurso("");
+    setNuevoEquipo("");
   };
 
   return (
     <div className="App">
       <Header onBuscar={manejarBusqueda} />
 
-      {/* El Nav le toca al Integrante B*/}
       <nav>
           <ul><li></li></ul>
       </nav>
@@ -72,6 +84,23 @@ function App() {
           placeholder="Estado"
           value={nuevoEstado}
           onChange={(e) => setNuevoEstado(e.target.value)}
+        />
+        <textarea
+          placeholder="Descripción"
+          value={nuevaDescripcion}
+          onChange={(e) => setNuevaDescripcion(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Recursos "
+          value={nuevoRecurso}
+          onChange={(e) => setNuevoRecurso(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Equipo "
+          value={nuevoEquipo}
+          onChange={(e) => setNuevoEquipo(e.target.value)}
         />
         <button onClick={manejarAgregar}>Agregar Proyecto</button>
 

@@ -1,15 +1,15 @@
 export const proyectoService = {
     proyectos: [
         { id: 1, titulo: "Diseño de Base de Datos para una Biblioteca", categoria: "Base de Datos II", estado: "En curso",
-            Descripción: "Este proyecto consiste en el diseño y modelado de una base de datos relacional orientada a la administración eficiente de una biblioteca. El objetivo principal es centralizar la información de los ejemplares, autores y categorías para facilitar la búsqueda.\n\nAsimismo, el sistema integra un módulo de control para socios y registros de préstamos. El propósito es automatizar la trazabilidad de cada libro, registrando fechas de salida y devolución para evitar pérdidas.",
-            Recursos: ["Introduccion al diseño (PDF)", "Modelo Entidad-Relacion (PDF)", "Normalización (PDF)"],
-            Equipo: [
+            descripcion: "Este proyecto consiste en el diseño y modelado de una base de datos relacional orientada a la administración eficiente de una biblioteca. El objetivo principal es centralizar la información de los ejemplares, autores y categorías para facilitar la búsqueda.\n\nAsimismo, el sistema integra un módulo de control para socios y registros de préstamos. El propósito es automatizar la trazabilidad de cada libro, registrando fechas de salida y devolución para evitar pérdidas.",
+            recursos: ["Introduccion al diseño (PDF)", "Modelo Entidad-Relacion (PDF)", "Normalización (PDF)"],
+            equipo: [
                 {nombre: "Marcos Tolaba", rol: "Diseño de Usuarios"},
                 {nombre: "Elena Machaca", rol: "Catálogo de Libros"}
             ]
         },
         { id: 2, titulo: "Traduccion Tecnica Ingles III", categoria: "Idiomas", estado: "Finalizado",
-            Descripción: "Proyecto enfocado en la traducción y adaptación de manuales técnicos de hardware y software del inglés al español. Busca compilar un glosario de términos específicos de IT.\n\nEl documento final servirá como material de consulta para las materias de programación de los primeros años de la carrera.",
+            descripcion: "Proyecto enfocado en la traducción y adaptación de manuales técnicos de hardware y software del inglés al español. Busca compilar un glosario de términos específicos de IT.\n\nEl documento final servirá como material de consulta para las materias de programación de los primeros años de la carrera.",
             recursos: ["Manual Técnico (PDF)", "Glosario (Drive)"],
             equipo: [
                 { nombre: "Matias Esquivel", rol: "Traductor Principal" }
@@ -24,9 +24,9 @@ export const proyectoService = {
             ]          
          },
         { id: 4, titulo: "Instalacion de Linux Debian", categoria: "Sistemas Operativos", estado: "En curso",
-            Descripción: "Configuración y despliegue de un sistema operativo Linux Debian mediante el uso de máquinas virtuales en VirtualBox. El proyecto abarca desde la asignación de recursos de hardware virtualizado hasta el particionamiento manual del disco.\n\nActualmente se trabaja en la etapa de post-instalación, ejecutando comandos esenciales en la terminal. El objetivo final es configurar los permisos de usuarios, grupos y habilitar servicios de red seguros.",
-            Recursos: ["Guía de Instalación (PDF)", "Script de Consola (Drive)"],
-            Equipo: [
+            descripcion: "Configuración y despliegue de un sistema operativo Linux Debian mediante el uso de máquinas virtuales en VirtualBox. El proyecto abarca desde la asignación de recursos de hardware virtualizado hasta el particionamiento manual del disco.\n\nActualmente se trabaja en la etapa de post-instalación, ejecutando comandos esenciales en la terminal. El objetivo final es configurar los permisos de usuarios, grupos y habilitar servicios de red seguros.",
+            recursos: ["Guía de Instalación (PDF)", "Script de Consola (Drive)"],
+            equipo: [
                 { nombre: "Matias Esquivel", rol: "Administrador de Red" }
             ]
          },
@@ -39,7 +39,14 @@ export const proyectoService = {
          }
     ],
 
-
+    //Obtener proyecto 
+        obtenerProyectos: function() {
+            return this.proyectos;
+          },
+    // Obtener proyecto por ID
+        obtenerProyectoPorId: function(id) {
+            return this.proyectos.find(proy => proy.id === id);
+        },
     //Agregar proyecto
     agregarProyecto: function(nuevoProyecto) {
         const nuevoId = this.proyectos.length > 0 
@@ -50,7 +57,10 @@ export const proyectoService = {
             id: nuevoId,
             titulo: nuevoProyecto.titulo,
             categoria: nuevoProyecto.categoria,
-            estado: nuevoProyecto.estado
+            estado: nuevoProyecto.estado,
+            descripcion: nuevoProyecto.descripcion || "",   
+            recursos: nuevoProyecto.recursos || [],         
+            equipo: nuevoProyecto.equipo || []
         };
 
         this.proyectos.push(proyecto);
