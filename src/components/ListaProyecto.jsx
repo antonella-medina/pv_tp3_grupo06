@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { proyectoService } from '../services/proyectoService';
+import DetalleProyecto from "./DetalleProyecto";
 
 function ListaProyectos() {
   const [proyectos, setProyectos] = useState([]);
+  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null); // 👈 faltaba esto
 
   const mostrarProyectos = () => {
     const lista = proyectoService.obtenerProyectos();
     setProyectos(lista);
+  };
+
+  const verDetalles = (id) => {
+    const proyecto = proyectoService.obtenerProyectoPorId(id);
+    setProyectoSeleccionado(proyecto);
   };
 
   return (
@@ -28,15 +35,23 @@ function ListaProyectos() {
       >
         Mostrar Proyectos
       </button>
-        <h2>
+
       <ul>
         {proyectos.map(proy => (
           <li key={proy.id}>
             {proy.id}. {proy.titulo} - {proy.categoria} ({proy.estado})
+            <button 
+              onClick={() => verDetalles(proy.id)} 
+              style={{ marginLeft: "10px" }}
+            >
+              Ver detalles
+            </button>
           </li>
         ))}
       </ul>
-        </h2>
+
+      {/* Pasamos el proyecto seleccionado como prop */}
+      <DetalleProyecto proyecto={proyectoSeleccionado} />
     </div>
   );
 }
