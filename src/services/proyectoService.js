@@ -41,7 +41,7 @@ export const proyectoService = {
 
     //Obtener proyecto 
         obtenerProyectos: function() {
-            return this.proyectos;
+            return [...this.proyectos];
           },
     // Obtener proyecto por ID
         obtenerProyectoPorId: function(id) {
