@@ -3,7 +3,8 @@ import { proyectoService } from '../services/proyectoService';
 import ProyectoCard from './ProyectoCard'; // Se importo el componente tarjeta
 
 function ListaProyectos({ onVerDetalle }) {
-  const [proyectos, setProyectos] = useState([]);
+  const [proyectos, setProyectos] = useState(
+  proyectoService.obtenerProyectos());
   const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null); // 👈 faltaba esto
 
   // Desestructuración en el manejo de estados del formulario
@@ -52,19 +53,6 @@ function ListaProyectos({ onVerDetalle }) {
   };
   // --------------------------------------------------------------------------
 
-  const mostrarProyectos = () => {
-    // Como tus compañeros no crearon obtenerProyectos(), 
-    // leemos directamente el arreglo 'proyectos' que tienen guardado.
-    if (proyectoService.proyectos) {
-      setProyectos(proyectoService.proyectos);
-    } else if (typeof proyectoService.obtenerProyectos === 'function') {
-      const lista = proyectoService.obtenerProyectos();
-      setProyectos(lista);
-    } else {
-      alert("No se encontró la lista de proyectos en el servicio.");
-    }
-  };
-
   const manejarEliminar = (id) => {
     const listaFiltrada = proyectoService.eliminarProyecto(id, proyectos);
     setProyectos(listaFiltrada);
@@ -106,21 +94,6 @@ function ListaProyectos({ onVerDetalle }) {
         <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#4caf50', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Guardar Proyecto</button>
       </form>
 
-      <button 
-        onClick={mostrarProyectos}
-        style={{
-          fontSize: '1.2rem',
-          margin: '12px',
-          padding: '12px 24px',
-          backgroundColor: '#646cff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '8px',
-          cursor: 'pointer'
-        }}
-      >
-        Cargar Listado Inicial
-      </button>
 
       {/* --- .map() implementando el componente ProyectoCard --- */}
       <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '20px' }}>
