@@ -4,6 +4,7 @@ import ProyectoCard from './ProyectoCard'; // Se importo el componente tarjeta
 
 function ListaProyectos({ onVerDetalle }) {
   const [proyectos, setProyectos] = useState([]);
+  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null); // 👈 faltaba esto
 
   // Desestructuración en el manejo de estados del formulario
   // Se creo un único objeto de estado para el formulario
@@ -67,6 +68,11 @@ function ListaProyectos({ onVerDetalle }) {
   const manejarEliminar = (id) => {
     const listaFiltrada = proyectoService.eliminarProyecto(id, proyectos);
     setProyectos(listaFiltrada);
+  };
+
+  const verDetalles = (id) => {
+    const proyecto = proyectoService.obtenerProyectoPorId(id);
+    setProyectoSeleccionado(proyecto);
   };
 
   return (
