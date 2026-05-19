@@ -6,7 +6,10 @@ function DetalleProyecto({ proyecto }) {
   return (
     <div style={{ marginTop: "20px", border: "1px solid #ccc", padding: "10px" }}>
       <h3>{proyecto.titulo}</h3>
-      <p><strong>Descripción:</strong> {proyecto.descripcion}</p>
+      <p style={{ whiteSpace: 'pre-line', marginTop: '10px' }}>
+        <strong>Descripción:</strong>
+         {proyecto.descripcion}
+      </p>
 
       <p><strong>Recursos:</strong></p>
       <ul>
