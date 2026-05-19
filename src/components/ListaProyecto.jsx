@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { proyectoService } from '../services/proyectoService';
-import ProyectoCard from './ProyectoCard'; // Se importo el componente tarjeta
+import ProyectoCard from './ProyectoCard.jsx'; // Se importo el componente tarjeta
+import DetalleProyecto from './DetalleProyecto.jsx';
 
 function ListaProyectos({ onVerDetalle }) {
   const [proyectos, setProyectos] = useState(
@@ -22,7 +23,7 @@ function ListaProyectos({ onVerDetalle }) {
   // Se desestructuro el objeto para usar sus variables limpias en los inputs
   const { titulo, categoria, estado, descripcion, recursos, integranteNombre, integranteRol } = formulario;
 
-  const manejarCambioInput = (e) => {
+  const handleCambioInput = (e) => {
     const { name, value } = e.target;
     setFormulario({
       ...formulario,
@@ -30,7 +31,7 @@ function ListaProyectos({ onVerDetalle }) {
     });
   };
 
-  const manejarEnvio = (e) => {
+  const handleEnvio = (e) => {
     e.preventDefault();
     if (!titulo || !categoria) return alert('Por favor, completa título y categoría.');
 
@@ -53,12 +54,12 @@ function ListaProyectos({ onVerDetalle }) {
   };
   // --------------------------------------------------------------------------
 
-  const manejarEliminar = (id) => {
+  const handleEliminar = (id) => {
     const listaFiltrada = proyectoService.eliminarProyecto(id, proyectos);
     setProyectos(listaFiltrada);
   };
 
-  const verDetalles = (id) => {
+  const handleverDetalles = (id) => {
     const proyecto = proyectoService.obtenerProyectoPorId(id);
     setProyectoSeleccionado(proyecto);
   };
@@ -97,16 +98,19 @@ function ListaProyectos({ onVerDetalle }) {
 
       {/* --- .map() implementando el componente ProyectoCard --- */}
       <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '20px' }}>
+       
         {proyectos.map(proy => (
-          // En lugar de un <li> ordinario, se renderizo la tarjeta pasando el objeto completo por prop
           <ProyectoCard 
             key={proy.id} 
             proyecto={proy} 
             onEliminar={manejarEliminar}
-            onVerDetalle={onVerDetalle}
+            onVerDetalle={verDetalles}
           />
         ))}
       </div>
+        {proyectoSeleccionado && (
+      <DetalleProyecto proyecto={proyectoSeleccionado} />
+    )}
     </div>
   );
 }
