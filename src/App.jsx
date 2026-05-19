@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import Header from './components/Header'
+import Nav from './components/Nav'
 import Footer from "./components/Footer";
 import ListaProyectos from './components/ListaProyecto'; 
+import DetalleProyecto from './components/DetalleProyecto';
 import { proyectoService } from './services/proyectoService'
 import "./css/styles.css";
 import './App.css'
@@ -58,10 +60,7 @@ function App() {
   return (
     <div className="App">
       <Header onBuscar={manejarBusqueda} />
-
-      <nav>
-          <ul><li></li></ul>
-      </nav>
+      <Nav/>
 
       <main style={{ padding: '20px' }}>
         <h2>Lista de Proyectos (filtrados)</h2>
