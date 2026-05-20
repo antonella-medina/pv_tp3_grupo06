@@ -1,147 +1,86 @@
-/* Variables para Consistencia Visual (:root) */
-:root {
-    --color-primario: #2c3e50;    /* Azul oscuro */
-    --color-secundario: #3498db;  /* Azul claro */
-    --color-fondo: #f4f4f4;       /* Gris muy claro */
-    --fuente-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Estructura General con CSS Grid */
-.App {
-    display: grid;
-    grid-template-areas: 
-        "header"
-        "nav"
-        "main"
-        "footer";
-    grid-template-rows: auto auto 1fr auto;
-    min-height: 100vh;
+* {
     margin: 0;
-    font-family: var(--fuente-base);
-    background-color: var(--color-fondo);
+    padding: 0;
+    box-sizing: border-box;
 }
 
-header { 
-    grid-area: header; 
-    background-color: var(--color-primario); 
-    color: white; 
-    padding: 1rem; 
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #fdfdfd;
+    color: #f0e8e8;
+}
+
+.content-area {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* --- BARRA SUPERIOR (HEADER) --- */
+.header {
+    background: linear-gradient(135deg, #1f2937 0%, #293647 50%, #233043 100%);
+    padding: 25px 20px;
+    text-align: center;
+    border-bottom: 1px solid #E2E8F0; /* Línea divisoria gris suave */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.header h1 {
+    color: #ffffff;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800; /* La hace bien gruesa e imponente */
+    letter-spacing: -1px; /* Junta un pelín las letras para que parezca un logo */
+    margin: 0;
+}
+
+nav {
+    background-color: #ffffff;
+    padding: 16px;
+    border-bottom: 1px solid #E2E8F0; /* Línea divisoria inferior */
     text-align: center; 
-}
-
-/* Flexbox para el Navegador (nav) */
-nav { 
-    grid-area: nav; 
-    background-color: #ecf0f1; 
 }
 
 nav ul {
-    display: flex; 
-    justify-content: center;
-    list-style: none;
-    gap: 20px;
-    padding: 10px;
+    list-style: none; /* Le saca los puntitos negros a la lista */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Centra los enlaces horizontalmente */
+    gap: 15px; /* Espaciado entre cada botón */
 }
 
-/* --- ESTA ES LA PARTE QUE AGREGAMOS/CORREGIMOS --- */
+nav li {
+    display: inline;
+}
+
 nav a {
+    color: #232323; 
     text-decoration: none;
-    color: var(--color-primario);
-    font-weight: bold;
-    transition: 0.3s;
-    padding: 5px 10px;
-    border-radius: 4px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase; 
+    padding: 10px 20px; 
+    border-radius: 20px; /* Bordes redondeados */
+    border: 2px solid transparent; /* Borde invisible para que no salte al activarse */
+    transition: all 0.2s ease-in-out; /* Animación suave al pasar el mouse */
 }
 
-nav a:hover {
-    color: var(--color-secundario);
-    background-color: rgba(52, 152, 219, 0.1);
+nav a:hover, nav a:active {
+    background-color: #232323; /* Se vuelve negro*/
+    color: #ffffff;            /* El texto pasa a blanco */
+    border-color: #232323;     /* Se activa el borde oscuro */
 }
 
-nav a:focus {
-    outline: 2px solid var(--color-secundario);
-    background-color: rgba(52, 152, 219, 0.1);
+footer {
+    background-color: #ffffff;
+    color: #94A3B8; 
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    border-top: 1px solid #E2E8F0;
+    margin-top: 50px; /* Despega el footer de las tarjetas */
 }
-
-nav a:active {
-    background-color: var(--color-secundario);
-    color: white;
-}
-/* ------------------------------------------------ */
-
-main { 
-    grid-area: main; 
-    padding: 20px; 
-}
-
-footer { 
-    grid-area: footer; 
-    text-align: center; 
-    padding: 1rem; 
-    background: #ddd; 
-}
-
-/*index*/
- .stats-container {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: white;
-            padding: 1.5rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
- #novedades-titulo {
-            border-bottom: 2px solid var(--color-secundario);
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-    /*detalle*/
-    .caja-biblioteca {
-        background-color: #ffffff;
-        border: 2px solid var(--color-primario); 
-        padding: 20px;
-        border-radius: 10px;
-    }
-    /*perfil*/
-    .contenedor-perfiles {
-            display: flex;        
-            flex-wrap: wrap;       
-            justify-content: center; 
-            gap: 20px;            
-            padding: 20px;
-        }
-
-        .perfil {
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 15px;
-            width: 220px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .avatar { font-size: 60px; margin-bottom: 10px; }
-        .rol-docente { color: #d35400; font-weight: bold; }
-        .rol-alumno { color: #2980b9; font-weight: bold; }
-        h2, p { margin: 5px 0; }
-
-        /*proyecto*/
-         .contenedor-proyectos { 
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            }
-            article {
-                border: 1px solid #ccc;
-                padding: 15px;
-                width: 250px;
-                background-color: #f9f9f9;
-                border-radius: 6px;
-            }
-            img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            margin-bottom: 10px;
-            border-radius: 4px;
-        }

@@ -1,114 +1,175 @@
-import React, { useState } from 'react';
-import { proyectoService } from '../services/proyectoService';
-import ProyectoCard from './ProyectoCard'; // Se importo el componente tarjeta
+import proyectoService from "../services/proyectoService";
+import {useState} from "react";
+import ProyectoCard from "./ProyectoCard.jsx"; 
+import DetalleProyecto from "./DetalleProyecto.jsx";
 
-function ListaProyectos({ onVerDetalle }) {
-  const [proyectos, setProyectos] = useState(
-  proyectoService.obtenerProyectos());
-  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null); // 👈 faltaba esto
-
-  // Desestructuración en el manejo de estados del formulario
-  // Se creo un único objeto de estado para el formulario
-  const [formulario, setFormulario] = useState({
-    titulo: '',
-    categoria: '',
-    estado: 'En curso',
-    descripcion: '',
-    recursos: '',
-    integranteNombre: '',
-    integranteRol: ''
-  });
-
-  // Se desestructuro el objeto para usar sus variables limpias en los inputs
-  const { titulo, categoria, estado, descripcion, recursos, integranteNombre, integranteRol } = formulario;
-
-  const manejarCambioInput = (e) => {
-    const { name, value } = e.target;
-    setFormulario({
-      ...formulario,
-      [name]: value
+const ListaProyecto =() => {
+  const [proyectos, setProyectos] = useState(proyectoService.obtenerProyectos());
+  const [busqueda, setBusqueda] = useState("");
+  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
+  
+    const [formulario, setFormulario] = useState({
+      titulo:"",
+      categoria:"",
+      estado:"En curso", //valor por defecto
+      descripcion: "",
+      integranteNombre: "",
+      integranteRol: "",
+      recursos: ""
     });
-  };
 
-  const manejarEnvio = (e) => {
-    e.preventDefault();
-    if (!titulo || !categoria) return alert('Por favor, completa título y categoría.');
+    const { titulo, categoria, estado, descripcion, integranteNombre, integranteRol, recursos} = formulario;
 
-    // Se estructuro el nuevo proyecto
-    const nuevoProyecto = {
-      titulo,
-      categoria,
-      estado,
-      descripcion: descripcion || "Sin descripción disponible.",
-      recursos: recursos ? recursos.split(',').map(r => r.trim()) : [],
-      equipo: integranteNombre ? [{ nombre: integranteNombre, rol: integranteRol || 'Integrante' }] : []
+    const handleChange = (e) =>{
+      const {name, value}=e.target;
+      setFormulario({...formulario, [name]: value});
+      console.log(formulario);
     };
 
-    // Se agrego el proyecto usando el servicio oficial del grupo y se actualizo la lista
-    const listaActualizada = proyectoService.agregarProyecto(nuevoProyecto);
-    setProyectos([...listaActualizada]);
+    const handleAgregar = (e) => {
+    e.preventDefault();
+    if (titulo === "") return;
 
-    // Se reseteo el formulario vaciando el objeto
-    setFormulario({ titulo: '', categoria: '', estado: 'En curso', descripcion: '', recursos: '', integranteNombre: '', integranteRol: '' });
-  };
-  // --------------------------------------------------------------------------
+    const nuevoProyecto = {
+        titulo,
+        categoria,
+        estado,
+        descripcion: descripcion || "Sin descripción disponible.",
+        recursos: recursos ? [recursos] : [],
+        equipo: integranteNombre ? [{ nombre: integranteNombre, rol: integranteRol || "Integrante" }] : []
+    };
 
-  const manejarEliminar = (id) => {
-    const listaFiltrada = proyectoService.eliminarProyecto(id, proyectos);
-    setProyectos(listaFiltrada);
+    /*Guardamos el nuevo proyecto estructurado*/
+    proyectoService.agregarProyecto(nuevoProyecto);
+    setFormulario({ titulo: "", categoria: "", estado: "En curso", descripcion: "",
+      integranteNombre: "", integranteRol: "", recursos: "" });
+      setProyectos(proyectoService.obtenerProyectos());
   };
 
-  const verDetalles = (id) => {
-    const proyecto = proyectoService.obtenerProyectoPorId(id);
-    setProyectoSeleccionado(proyecto);
-  };
+    const handleEliminar = (id) => {
+        proyectoService.eliminarProyecto(id);
+        setProyectos(proyectoService.obtenerProyectos());
+    };
+    const handleBusqueda = (e) =>{
+      const valor = e.target.value;
+      setBusqueda(valor);
+      setProyectos(proyectoService.buscarProyecto(valor));
+    };
+
+    const handleVerDetalle = (id) => {
+      const proyecto = proyectoService.obtenerProyectoPorId(id);
+      setProyectoSeleccionado(proyecto);
+    }
+
+    /*renderizado condicional para la vista de detalle */
+    if (proyectoSeleccionado){
+      return(
+        <DetalleProyecto
+        proyecto={proyectoSeleccionado} 
+            onCerrar={() => setProyectoSeleccionado(null)}
+        />
+      );
+    }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Gestión de Proyectos</h1>
+    <div className="lista-proyecto-container">
+      <h2>Gestión de Proyectos Educativos</h2>
       
-      {/* Formulario de Alta con estados desestructurados */}
-      <form onSubmit={manejarEnvio} style={{ background: '#2a2a2a', padding: '20px', borderRadius: '8px', marginBottom: '30px', textAlign: 'left', maxWidth: '600px', margin: '0 auto 30px auto' }}>
-        <h3 style={{ color: '#646cff', marginTop: 0 }}>Agregar Nuevo Proyecto</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
-          <input type="text" name="titulo" placeholder="Título del proyecto" value={titulo} onChange={manejarCambioInput} style={{ padding: '8px' }} />
-          <input type="text" name="categoria" placeholder="Categoría" value={categoria} onChange={manejarCambioInput} style={{ padding: '8px' }} />
-        </div>
-        <div style={{ marginBottom: '10px' }}>
-          <select name="estado" value={estado} onChange={manejarCambioInput} style={{ padding: '8px', width: '100%' }}>
-            <option value="En curso">En curso</option>
-            <option value="Finalizado">Finalizado</option>
-            <option value="Pendiente">Pendiente</option>
-          </select>
-        </div>
-        <div style={{ marginBottom: '10px' }}>
-          <textarea name="descripcion" placeholder="Descripción del proyecto..." value={descripcion} onChange={manejarCambioInput} rows="2" style={{ padding: '8px', width: '100%', resize: 'vertical' }}></textarea>
-        </div>
-        <div style={{ marginBottom: '10px' }}>
-          <input type="text" name="recursos" placeholder="Recursos (Separados por coma. Ej: Manual PDF, Link Drive)" value={recursos} onChange={manejarCambioInput} style={{ padding: '8px', width: '100%' }} />
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '15px' }}>
-          <input type="text" name="integranteNombre" placeholder="Nombre Integrante" value={integranteNombre} onChange={manejarCambioInput} style={{ padding: '8px' }} />
-          <input type="text" name="integranteRol" placeholder="Rol Integrante" value={integranteRol} onChange={manejarCambioInput} style={{ padding: '8px' }} />
-        </div>
-        <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#4caf50', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Guardar Proyecto</button>
-      </form>
+      {/*Gestion de filtro de busqueda*/}
+      <section className="search-section">
+            <input
+            type="text"
+            placeholder="Buscar por titulo..."
+            value={busqueda}
+            onChange={handleBusqueda}
+            className="search-input"
+            />  
+      </section>
 
+      {/*Formulario para alta de proyecto */}
+      <section className="form-section">
+          <h3>Agregar Nuevo Proyecto</h3>
+          <form onSubmit={handleAgregar} className="project-form">
+              <div className="form-row-triple">
+                <input
+                type="text"
+                name="titulo"
+                placeholder="Titulo del proyecto"
+                value={titulo}
+                onChange={handleChange}
+                className="form-input"
+                required
+                />
+                <input
+                type="text"
+                name="categoria"
+                placeholder="Categoria"
+                value={categoria}
+                onChange={handleChange}
+                className="form-input"
+                required
+                />
+                <select name="estado" value={formulario.estado} onChange={handleChange} className="form-select" >
+                  <option value="En curso">En curso</option>
+                  <option value="Finalizado">Finalizado</option>
+                  <option value="Pendiente">Pendiente</option>
+                </select>
+              </div> 
 
-      {/* --- .map() implementando el componente ProyectoCard --- */}
-      <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '20px' }}>
-        {proyectos.map(proy => (
-          // En lugar de un <li> ordinario, se renderizo la tarjeta pasando el objeto completo por prop
-          <ProyectoCard 
-            key={proy.id} 
-            proyecto={proy} 
-            onEliminar={manejarEliminar}
-            onVerDetalle={onVerDetalle}
-          />
-        ))}
-      </div>
-    </div>
+              <div className="form-row-full">
+                  <textarea
+                  name="descripcion"
+                  placeholder="Descripción del proyecto (Se sugiere armar un texto lindo de dos párrafos)"
+                  value={descripcion}
+                  onChange={handleChange}
+                  className="form-input form-textarea"
+                  />
+              </div>
+
+              <div className="form-row-rest">
+                  <input
+                  type="text"
+                  name="integranteNombre"
+                  placeholder="Nombre del Integrante"
+                  value={integranteNombre}
+                  onChange={handleChange}
+                  className="form-input"
+                  />
+                  <input
+                  type="text"
+                  name="integranteRol"
+                  placeholder="Rol del Integrante (ej: Programador)"
+                  value={integranteRol}
+                  onChange={handleChange}
+                  className="form-input"
+                  />
+                  <input
+                  type="text"
+                  name="recursos"
+                  placeholder="Recurso Inicial (ej: Manual PDF)"
+                  value={recursos}
+                  onChange={handleChange}
+                  className="form-input"
+                  />
+              </div>
+
+                <button type="submit" className="btn-submit">Guardar Proyecto</button>
+          </form>
+      </section>
+
+        {/*Listado de tarjetas */}
+        <div className="grid-proyectos"> 
+          {proyectos.map (p => (
+              <ProyectoCard 
+              key={p.id} 
+              proyecto={p} 
+              onVerDetalle={handleVerDetalle} 
+              onEliminar={handleEliminar}/>
+          ))}
+
+        </div>
+        </div>
+
   );
 }
-
-export default ListaProyectos;
+export default ListaProyecto;
