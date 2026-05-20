@@ -1,5 +1,5 @@
-export const proyectoService = {
-    proyectos: [
+const proyectoService = (() => {
+    let proyectos = [
         { id: 1, titulo: "Diseño de Base de Datos para una Biblioteca", categoria: "Base de Datos II", estado: "En curso",
             descripcion: "Este proyecto consiste en el diseño y modelado de una base de datos relacional orientada a la administración eficiente de una biblioteca. El objetivo principal es centralizar la información de los ejemplares, autores y categorías para facilitar la búsqueda.\n\nAsimismo, el sistema integra un módulo de control para socios y registros de préstamos. El propósito es automatizar la trazabilidad de cada libro, registrando fechas de salida y devolución para evitar pérdidas.",
             recursos: ["Introduccion al diseño (PDF)", "Modelo Entidad-Relacion (PDF)", "Normalización (PDF)"],
@@ -22,7 +22,7 @@ export const proyectoService = {
                 { nombre: "Abril Solis", rol: "Programador Principal" },
                 { nombre: "Valentina Paz", rol: "Tester de Código" }
             ]          
-         },
+        },
         { id: 4, titulo: "Instalacion de Linux Debian", categoria: "Sistemas Operativos", estado: "En curso",
             descripcion: "Configuración y despliegue de un sistema operativo Linux Debian mediante el uso de máquinas virtuales en VirtualBox. El proyecto abarca desde la asignación de recursos de hardware virtualizado hasta el particionamiento manual del disco.\n\nActualmente se trabaja en la etapa de post-instalación, ejecutando comandos esenciales en la terminal. El objetivo final es configurar los permisos de usuarios, grupos y habilitar servicios de red seguros.",
             recursos: ["Guía de Instalación (PDF)", "Script de Consola (Drive)"],
@@ -37,46 +37,35 @@ export const proyectoService = {
                 { nombre: "Abril Solis", rol: "Diseñador del Algoritmo" }
             ]
          }
-    ],
+    ];
 
     //Obtener proyecto 
-        obtenerProyectos: function() {
-            return [...this.proyectos];
-          },
-    // Obtener proyecto por ID
-        obtenerProyectoPorId: function(id) {
-            return this.proyectos.find(proy => proy.id === id);
-        },
-    //Agregar proyecto
-    agregarProyecto: function(nuevoProyecto) {
-        const nuevoId = this.proyectos.length > 0 
-            ? this.proyectos[this.proyectos.length - 1].id + 1 
-            : 1;
+        const obtenerProyectos = () => [...proyectos];
 
-        const proyecto = {
-            id: nuevoId,
-            titulo: nuevoProyecto.titulo,
-            categoria: nuevoProyecto.categoria,
-            estado: nuevoProyecto.estado,
-            descripcion: nuevoProyecto.descripcion || "",   
-            recursos: nuevoProyecto.recursos || [],         
-            equipo: nuevoProyecto.equipo || []
+        const eliminarProyecto = (id) =>{
+            proyectos=proyectos.filter(p => p.id !== id);
+            return obtenerProyectos();
         };
 
-        this.proyectos.push(proyecto);
-        return this.proyectos;
-    },
+        const agregarProyecto = (nuevoProyecto) => {
+            const proyectoConId = { ...nuevoProyecto, id: Date.now()};
+            proyectos = [...proyectos, proyectoConId];
+            return proyectoConId;
+        };
 
-    eliminarProyecto: function(id, lista) {
-        return lista.filter(proy => proy.id !== id);
-    },
-
-    // Esta es tu lógica del Integrante C
-    buscarProyecto: (texto, lista) => {
-        if (!texto) return lista;
-        return lista.filter(proy => 
-            proy.titulo.toLowerCase().includes(texto.toLowerCase())
+        const buscarProyecto = (termino) => {
+            return proyectos.filter((p) =>
+            p.titulo.toLowerCase().includes(termino.toLowerCase()),
         );
-    }
-};
- 
+        };
+
+        const obtenerProyectoPorId = (id) => {
+            return proyectos.find((p) => p.id === id);
+        };
+
+
+
+        return {obtenerProyectos, agregarProyecto, eliminarProyecto, buscarProyecto, obtenerProyectoPorId};
+})();
+
+export default proyectoService;

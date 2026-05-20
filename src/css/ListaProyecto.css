@@ -1,0 +1,350 @@
+.lista-proyecto-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.lista-proyecto-container h2 {
+    color: #0F172A; /* El azul noche oscuro re elegante que usamos en el formulario */
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center; /*Centra el título principal */
+    letter-spacing: -0.5px;
+}
+
+/* formulario de alta */
+.form-section {
+    background: #ffffff;
+    border-radius: 16px; /* Esquinas más suaves y modernas */
+    padding: 35px;
+    position: relative;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 
+                0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+    border: 1px solid #E2E8F0; /* Gris suave estándar */
+    overflow: hidden;
+}
+
+/* Línea decorativa superior */
+.form-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+   background: linear-gradient(90deg, #3B82F6, #1D4ED8); /* Azul tarjeta */
+}
+
+.form-section h3 {
+    color: #0F172A; /* Azul noche oscuro */
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: left;
+    letter-spacing: -0.5px;
+}
+
+/* Inputs y Selects */
+.form-input, .form-select {
+    width: 100%;
+    padding: 14px 16px; /* Más espacio interno para que respiren */
+    border: 2px solid #E2E8F0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #334155;
+    background-color: #F8FAFC; /* Gris neto ultra claro */
+    transition: all 0.25s ease;
+}
+
+.form-input:focus, .form-select:focus {
+    background-color: #ffffff; /* El fondo se vuelve blanco puro */
+    border-color: #3B82F6; /* Azul foco */
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); 
+    outline: none;
+}
+
+.form-row-triple {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-row-full {
+    margin-bottom: 15px;
+}
+
+.form-row-rest {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-textarea {
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Botón Guardar */
+.btn-submit {
+    background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); /* Mocha a Charcoal */
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2); 
+    transition: all 0.2s ease;
+    align-self: flex-end; 
+    margin-top: 5px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3); 
+    background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
+}
+
+.btn-submit:active {
+    transform: translateY(0); 
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+/*SECCIÓN BUSCADOR*/
+.search-section {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 100%;
+    padding: 14px 20px;
+    background-color: #eeecec; /* Gris pizarra profesional (no es negro absoluto) */
+    color: #ffffff; 
+    border: 1px solid #1E293B;
+    border-radius: 10px; 
+    font-size: 15px;
+    outline: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: #94A3B8;
+}
+
+.search-input:focus {
+    background-color: #ffffff; 
+    border-color: #3B82F6; /* Cambia al azul de tus tarjetas al hacer clic */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* GRILLA DE TARJETAS*/
+.grid-proyectos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Columnas automáticas */
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Manda los botones siempre abajo */
+    min-height: 220px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px); /* Efecto flotante sutil */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.card-content h3 {
+    font-size: 1.3rem;
+    color: #0F172A; /* Charcoal */
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.card-content p {
+    color: #64748b; /* Mocha */
+    font-size: 14px;
+    margin-top: 12px;
+    text-align: left;
+}
+
+.card-content p strong {
+    color: #475569; /* Charcoal */
+    margin-right: 6px;
+}
+
+/* badges de estado*/
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge.done {
+    background-color: #dcfce7;
+    color: #15803d; 
+}
+
+.badge.process {
+    background-color: #fef3c7;
+    color: #b45309; 
+}
+
+/* botones de accion dentro de la trajeta*/
+.card div:last-child {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-detail {
+    flex: 1;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s;
+}
+
+.btn-detail:hover {
+    background-color: #2563eb;
+}
+
+.btn-delete {
+    background-color: #fee2e2;
+    color: #ef4444;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    background-color: #ef4444;
+    color: white;
+}
+
+/* pantalla de deatalle proyecto*/
+
+.detalle-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.detalle-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid #E2E8F0; /* Oat */
+}
+
+.detalle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #F1F5F9; /* Milk */
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+.detalle-header h2 {
+    color: #0F172A; /* Charcoal */
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.detalle-info p {
+    font-size: 1.1rem;
+    color: #475569;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.detalle-info strong {
+    color: #1E293B; /* Mocha */
+}
+
+.detalle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 35px;
+    background-color: #F8FAFC;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.detalle-seccion h4 {
+    color: #334155;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #E2E8F0;
+    padding-bottom: 8px;
+}
+
+.detalle-seccion ul {
+    list-style-position: inside;
+    color: #475569;
+}
+
+.detalle-seccion li {
+    margin-bottom: 8px;
+}
+
+.text-muted {
+    color: #94A3B8; /* Taupe */
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+.detalle-footer {
+    margin-top: 40px;
+    text-align: right;
+}
+
+.btn-volver {
+    background-color: #F1F5F9; /* Milk */
+    color: #475569;
+    border: 1px solid #CBD5E1;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-volver:hover {
+    background-color: #E2E8F0;
+    color: #0F172A;
+}

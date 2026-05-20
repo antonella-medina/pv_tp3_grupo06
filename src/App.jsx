@@ -1,122 +1,23 @@
 import { useState } from 'react'
-import Header from './components/Header'
-import Nav from './components/Nav'
+import Header from "./components/Header";
+import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import ListaProyectos from './components/ListaProyecto'; 
-import DetalleProyecto from './components/DetalleProyecto';
-import { proyectoService } from './services/proyectoService'
+import ListaProyecto from './components/ListaProyecto.jsx'; 
+import DetalleProyecto from './components/DetalleProyecto.jsx';
+import proyectoService from './services/proyectoService';
 import "./css/styles.css";
-import './App.css'
+import "./css/ListaProyecto.css";
 
-function App() {
-  const proyectosIniciales = [
-    { id: 1, titulo: "Laboratorio de Sistemas" },
-    { id: 2, titulo: "Programación Visual" },
-    { id: 3, titulo: "Informática Básica" },
-    { id: 4, titulo: "Base de Datos II" },
-    { id: 5, titulo: "Estructura de Datos" } // 👈 sin punto y coma
-  ];
-
-  const [proyectosFiltrados, setProyectosFiltrados] = useState(proyectosIniciales);
-  const [nuevoTitulo, setNuevoTitulo] = useState("");
-  const [nuevaCategoria, setNuevaCategoria] = useState("");
-  const [nuevoEstado, setNuevoEstado] = useState("");
-  const [nuevaDescripcion, setNuevaDescripcion] = useState("");   
-  const [nuevoRecurso, setNuevoRecurso] = useState("");           
-  const [nuevoEquipo, setNuevoEquipo] = useState("");
-
-  const manejarBusqueda = (texto) => {
-    const resultado = proyectoService.buscarProyecto(texto, proyectosIniciales);
-    setProyectosFiltrados(resultado);
-  };
-
-  const manejarEliminar = (id) => {
-    const listaNueva = proyectoService.eliminarProyecto(id, proyectosFiltrados);
-    setProyectosFiltrados(listaNueva);
-  };
-
-  const manejarAgregar = () => {
-    const nuevos = proyectoService.agregarProyecto({
-      titulo: nuevoTitulo,
-      categoria: nuevaCategoria,
-      estado: nuevoEstado, // 👈 coma corregida
-      descripcion: nuevaDescripcion, 
-      recursos: nuevoRecurso.split(",").map(r => r.trim()), 
-      equipo: nuevoEquipo.split(",").map(e => {
-        const [nombre, rol] = e.split("-");
-        return { nombre: nombre?.trim(), rol: rol?.trim() };
-      })
-    });
-
-    setProyectosFiltrados([...nuevos]);
-    setNuevoTitulo("");
-    setNuevaCategoria("");
-    setNuevoEstado("");
-    setNuevaDescripcion("");
-    setNuevoRecurso("");
-    setNuevoEquipo("");
-  };
-
+const App = () => {
+  
   return (
     <div className="App">
-      <Header onBuscar={manejarBusqueda} />
+      <Header/>
       <Nav/>
 
-      <main style={{ padding: '20px' }}>
-        <h2>Lista de Proyectos (filtrados)</h2>
-
-        {/* Formulario para agregar */}
-        <input
-          type="text"
-          placeholder="Título"
-          value={nuevoTitulo}
-          onChange={(e) => setNuevoTitulo(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Categoría"
-          value={nuevaCategoria}
-          onChange={(e) => setNuevaCategoria(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Estado"
-          value={nuevoEstado}
-          onChange={(e) => setNuevoEstado(e.target.value)}
-        />
-        <textarea
-          placeholder="Descripción"
-          value={nuevaDescripcion}
-          onChange={(e) => setNuevaDescripcion(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Recursos "
-          value={nuevoRecurso}
-          onChange={(e) => setNuevoRecurso(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Equipo "
-          value={nuevoEquipo}
-          onChange={(e) => setNuevoEquipo(e.target.value)}
-        />
-        <button onClick={manejarAgregar}>Agregar Proyecto</button>
-
-        <ul>
-          {proyectosFiltrados.map(p => (
-            <li key={p.id} style={{ fontSize: '1.2rem', margin: '10px 0' }}>
-              {p.titulo}
-              <button 
-                onClick={() => manejarEliminar(p.id)}
-                style={{ marginLeft: '20px', color: 'red', cursor: 'pointer' }}
-              >
-                Eliminar
-              </button>
-            </li>
-          ))}
-        </ul>
-        <ListaProyectos />
+      <main className="content-area">
+  
+        <ListaProyecto/>
       </main>
       <Footer />
     </div>
