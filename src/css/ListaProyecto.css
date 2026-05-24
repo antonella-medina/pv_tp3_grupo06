@@ -348,3 +348,12 @@
     background-color: #E2E8F0;
     color: #0F172A;
 }
+.registro-actividad {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #f0f8ff; 
+    border-left: 4px solid #007acc; 
+    color: #333; /
+    font-size: 0.9rem;
+  }
+  
