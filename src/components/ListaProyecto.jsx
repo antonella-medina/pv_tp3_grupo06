@@ -36,7 +36,7 @@ const ListaProyecto = () => {
   const handleBusqueda = (e) => {
     const valor = e.target.value;
     setBusqueda(valor);
-    esBusqueda.current = true; // 4. Se avisa que el cambio en 'proyectos' es solo por BUSQUEDA
+    esBusqueda.current = true;
     setProyectos(proyectoService.buscarProyecto(valor));
   };
 
@@ -109,7 +109,8 @@ const ListaProyecto = () => {
         ))}
       </div>
 
-      <RegistroActividad fecha={fechaActualizacion} />
+     {/* CORRECCIÓN: Si hay texto en 'busqueda', el componente NO se muestra. */}
+      {!busqueda && <RegistroActividad fecha={fechaActualizacion} />}
     </div>
   );
 };
