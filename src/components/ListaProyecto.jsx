@@ -1,34 +1,30 @@
 import proyectoService from "../services/proyectoService";
-// 1. IMPORTANTE: Se agrego useRef al import
 import { useState, useEffect, useRef } from "react"; 
 import ProyectoCard from "./ProyectoCard.jsx"; 
-import DetalleProyecto from "./DetalleProyecto.jsx";
+// Saqué el import de DetalleProyecto porque ahora se maneja por su propia ruta en App.jsx
 import FormularioProyecto from "./FormularioProyecto.jsx";
 import RegistroActividad from "./RegistroActividad.jsx";
 
 const ListaProyecto = () => {
   const [proyectos, setProyectos] = useState(proyectoService.obtenerProyectos());
   const [busqueda, setBusqueda] = useState("");
-  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
   
-  // 2. Se inicializo el estado de la fecha en null para que no aparezca al principio
+  // Mantengo intacto el estado de la fecha de la Parte 3
   const [fechaActualizacion, setFechaActualizacion] = useState(null);
 
-  // 3. SE CREO LAS BANDERAS CON useRef
-  // esCargaInicial evitará que el cartel se dibuje al cargar la página por primera vez
+  // Mantengo nuestras banderas con useRef tal cual las dejamos funcionando
   const esCargaInicial = useRef(true);
-  // esBusqueda evitará que escribir en el input altere la fecha de modificación
   const esBusqueda = useRef(false);
 
   /* Se recibe el proyecto hijo */
   const handleAgregarProyectoPadre = (nuevoProyecto) => {
-    esBusqueda.current = false; // Se avisa que esto Es un Alta real, no una búsqueda
+    esBusqueda.current = false; 
     proyectoService.agregarProyecto(nuevoProyecto);
     setProyectos(proyectoService.obtenerProyectos());
   };
 
   const handleEliminar = (id) => {
-    esBusqueda.current = false; // Se avisa que esto Es una Baja real, no una búsqueda
+    esBusqueda.current = false; 
     proyectoService.eliminarProyecto(id);
     setProyectos(proyectoService.obtenerProyectos());
   };
@@ -36,29 +32,21 @@ const ListaProyecto = () => {
   const handleBusqueda = (e) => {
     const valor = e.target.value;
     setBusqueda(valor);
-    esBusqueda.current = true; // 4. Se avisa que el cambio en 'proyectos' es solo por BUSQUEDA
+    esBusqueda.current = true; 
     setProyectos(proyectoService.buscarProyecto(valor));
   };
 
-  const handleVerDetalle = (id) => {
-    const proyecto = proyectoService.obtenerProyectoPorId(id);
-    setProyectoSeleccionado(proyecto);
-  };
-
-  // 5. EFECTO SECUNDARIO OPTIMIZADO CON LAS BANDERAS
+  // Mantengo nuestro efecto secundario optimizado idéntico al de antes
   useEffect(() => {
-    // CONDICIÓN A: Si es la primera vez que arranca la app, salta la ejecución
     if (esCargaInicial.current) {
       esCargaInicial.current = false;
       return;
     }
 
-    // CONDICIÓN B: Si el cambio de estado fue provocado por el buscador, lo ignora
     if (esBusqueda.current) {
       return; 
     }
 
-    // Si pasó los dos filtros anteriores, significa que fue un ALTA o BAJA real. Formatea la fecha:
     const ahora = new Date();
     const dia = String(ahora.getDate()).padStart(2, "0");
     const mes = String(ahora.getMonth() + 1).padStart(2, "0");
@@ -68,17 +56,10 @@ const ListaProyecto = () => {
     const fechaFormateada = `${dia}/${mes}/${anio} a las ${horas}:${minutos} hs.`;
   
     setFechaActualizacion(fechaFormateada);
-  }, [proyectos]); // Sigue escuchando proyectos, pero ahora filtrando inteligentemente por las referencias
-  
-  /* renderizado condicional para la vista de detalle */
-  if (proyectoSeleccionado){
-    return(
-      <DetalleProyecto
-        proyecto={proyectoSeleccionado} 
-        onCerrar={() => setProyectoSeleccionado(null)}
-      />
-    );
-  }
+  }, [proyectos]);
+
+  // Acá volé el "if (proyectoSeleccionado)" que hacía el renderizado condicional, 
+  // porque el detalle ahora se muestra de forma independiente cambiando de pantalla por la URL.
 
   return (
     <div className="lista-proyecto-container">
@@ -104,7 +85,8 @@ const ListaProyecto = () => {
             <ProyectoCard 
             key={p.id} 
             proyecto={p} 
-            onVerDetalle={handleVerDetalle} 
+            /* Acá le saqué la prop onVerDetalle a la tarjeta porque ahora 
+               cada una maneja su navegación interna con su propio link dinámico */
             onEliminar={handleEliminar}/>
         ))}
       </div>
