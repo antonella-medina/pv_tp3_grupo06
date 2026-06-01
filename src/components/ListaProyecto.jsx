@@ -2,14 +2,12 @@ import proyectoService from "../services/proyectoService";
 // 1. IMPORTANTE: Se agrego useRef al import
 import { useState, useEffect, useRef } from "react"; 
 import ProyectoCard from "./ProyectoCard.jsx"; 
-import DetalleProyecto from "./DetalleProyecto.jsx";
 import FormularioProyecto from "./FormularioProyecto.jsx";
 import RegistroActividad from "./RegistroActividad.jsx";
 
 const ListaProyecto = () => {
   const [proyectos, setProyectos] = useState(proyectoService.obtenerProyectos());
   const [busqueda, setBusqueda] = useState("");
-  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
   
   // 2. Se inicializo el estado de la fecha en null para que no aparezca al principio
   const [fechaActualizacion, setFechaActualizacion] = useState(null);
@@ -40,11 +38,6 @@ const ListaProyecto = () => {
     setProyectos(proyectoService.buscarProyecto(valor));
   };
 
-  const handleVerDetalle = (id) => {
-    const proyecto = proyectoService.obtenerProyectoPorId(id);
-    setProyectoSeleccionado(proyecto);
-  };
-
   // 5. EFECTO SECUNDARIO OPTIMIZADO CON LAS BANDERAS
   useEffect(() => {
     // CONDICIÓN A: Si es la primera vez que arranca la app, salta la ejecución
@@ -70,15 +63,6 @@ const ListaProyecto = () => {
     setFechaActualizacion(fechaFormateada);
   }, [proyectos]); // Sigue escuchando proyectos, pero ahora filtrando inteligentemente por las referencias
   
-  /* renderizado condicional para la vista de detalle */
-  if (proyectoSeleccionado){
-    return(
-      <DetalleProyecto
-        proyecto={proyectoSeleccionado} 
-        onCerrar={() => setProyectoSeleccionado(null)}
-      />
-    );
-  }
 
   return (
     <div className="lista-proyecto-container">
@@ -103,8 +87,7 @@ const ListaProyecto = () => {
         {proyectos.map (p => (
             <ProyectoCard 
             key={p.id} 
-            proyecto={p} 
-            onVerDetalle={handleVerDetalle} 
+            proyecto={p}  
             onEliminar={handleEliminar}/>
         ))}
       </div>
