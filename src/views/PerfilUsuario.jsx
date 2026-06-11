@@ -1,4 +1,6 @@
 import { Container, Typography, Paper, List, ListItem, ListItemText } from "@mui/material";
+import { UsuarioContext } from "../context/UsuarioContext";
+import { useContext, useState } from "react";
 
 const PerfilUsuario = () => {
   const usuario = {
