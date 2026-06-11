@@ -10,9 +10,11 @@ import "./css/ListaProyecto.css";
 import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
 import Dashboard from "./views/Dashboard.jsx";
 import PerfilUsuario from "./views/PerfilUsuario.jsx";
+import { UsuarioProvider } from './context/UsuarioContext.jsx';
 
 const App = () => {
   return (
+    <UsuarioProvider>
     <Router>
       <div className="App">
         <Header />
@@ -46,6 +48,7 @@ const App = () => {
         <Footer />
       </div>
     </Router>
+    </UsuarioProvider>
   ); 
 } 
 
