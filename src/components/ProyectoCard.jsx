@@ -1,36 +1,35 @@
-import { Card, CardContent, CardActions, Typography, Button, Chip } from '@mui/material';
+import React from 'react';
+// Importe Link para poder navegar dinámicamente al detalle usando el ID en la URL
 import { Link } from 'react-router-dom';
+
 const ProyectoCard = ({ proyecto, onEliminar }) => {
-    const {id, titulo, categoria, estado} = proyecto;
+    const { id, titulo, categoria, estado } = proyecto;
     
-    return(
-            <Card variant="outlined" sx={{ mb: 2, display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
-                <CardContent>
-                    <Typography variant="h6" component="h3" gutterBottom>
-                        {titulo}
-                    </Typography>
-                
-                    <Chip 
-                        label={estado} 
-                        color={estado === 'Finalizado' ? 'success' : 'primary'} 
-                        size="small" 
-                        sx={{ mb: 1.5 }} 
-                    />
-                
-                    <Typography variant="body2" color="text.secondary">
-                        <strong>Categoría:</strong> {categoria}
-                    </Typography>
-                </CardContent>
+    return (
+         <article className="card">
+            <div className="card-content">
+                <h3>{titulo}</h3>
+                <span className={`badge ${estado === 'Finalizado' ? 'done' : 'process'}`}>
+                    {estado}
+                </span>
+                <p>
+                    <strong>Categoria</strong>
+                    {categoria}
+                </p>
+            </div>
             
-                <CardActions>
-                    <Button component={Link} to={`/detalle/${id}`} size="small" variant="contained">
-                        Ver Detalle
-                    </Button>
-                    <Button size="small" color="error" onClick={() => onEliminar(id)}>
-                        Eliminar
-                    </Button>
-                </CardActions>
-            </Card>
+            <div>
+                {/* Actualicé el path del Link a '/detalle/' para que coincida 
+                    exactamente con la estructura de rutas que definieron en App.jsx.
+                */}
+                <Link to={`/detalle/${id}`} className="btn-detail" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                    Ver Detalle
+                </Link>
+                
+                {/* El botón de eliminar se mantiene igual con su prop correspondiente */}
+                <button className="btn-delete" onClick={() => onEliminar(id)}>Eliminar</button>
+            </div>
+         </article>
     );
 }
 
