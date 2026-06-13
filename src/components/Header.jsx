@@ -1,16 +1,24 @@
 import React, { useContext } from 'react';
+// Importe el contexto global de usuario para conectar el encabezado
 import { UsuarioContext } from '../context/UsuarioContext';
 
-// Componente Header: muestra el título de la plataforma y el nombre/rol del usuario
 const Header = ({ onBuscar }) => {
-    // useContext permite acceder al estado global definido en UsuarioContext
-    // Aquí obtenemos el objeto usuario (nombre, rol, etc.)
+  // Extraigo el objeto 'usuario' de nuestro estado centralizado
   const { usuario } = useContext(UsuarioContext);
 
   return (
     <header className="header">
       <h1>Plataforma de Proyectos Académicos</h1>
-      <p>Bienvenido, {usuario.nombre} ({usuario.rol})</p>
+      {/* Agregue el signo de pregunta (usuario?.nombre) como protección. 
+          Así, si el localStorage tarda un milisegundo en levantar los datos o arranca vacío, 
+          la app no se cuelga ni tira pantalla en blanco, y muestra los datos dinámicos apenas estén listos. */}
+      <div className="user-info-header" style={{ fontSize: '0.95rem', fontWeight: '500' }}>
+        {usuario ? (
+          <span>👋 Bienvenido, <strong>{usuario.nombre}</strong> ({usuario.rol})</span>
+        ) : (
+          <span>Cargando usuario...</span>
+        )}
+      </div>
     </header>
   );
 };
